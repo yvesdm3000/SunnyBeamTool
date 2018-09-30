@@ -361,13 +361,14 @@ int parse_measurements(char* title, char* timeFormat, char* printfFormat, BYTE* 
         memcpy(&val, (BYTE*) & part_buf[2 * sizeof (DWORD)], sizeof (float));
 
         time_t timestamp;
-        time_t timestamp_diff;
         struct tm *ts;
         char timebuf[80];
+        DWORD dtime = 0;
 
         /* Get the current time */
-        memcpy(&timestamp, part_buf, sizeof (time_t));
-        memcpy(&timestamp_diff, (BYTE*) & part_buf[ sizeof (DWORD)], sizeof (time_t));
+        memcpy(&dtime, part_buf, sizeof (dtime));
+        timestamp = dtime;
+
         // remove one hour ??
         timestamp -= 60 * 60 * 2;
         //timestamp += 24 * 60 * 60;
