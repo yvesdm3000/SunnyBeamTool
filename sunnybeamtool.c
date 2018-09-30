@@ -239,7 +239,7 @@ int search_device_id(struct usb_device *dev, struct usb_dev_handle *udev) {
             return 0;
         memcpy(&sunnybeamdata.deviceid, &(buf[5]), sizeof (DWORD));
         if (verbose)
-            printf("device id= %04lX\n", sunnybeamdata.deviceid);
+            printf("device id= %04X\n", (int)sunnybeamdata.deviceid);
         resu = 1;
     }
     return resu;
@@ -390,6 +390,7 @@ int do_today_details_query(struct usb_device *dev, struct usb_dev_handle * udev)
     BYTE buf[5 * 1024];
 
     int resu = do_combined_read_messages(udev, (BYTE*) & cmd_get_data, sizeof (cmd_get_data), (BYTE*) buf, sizeof (buf));
+    printf("resu=%d\n", resu);
 
     parse_measurements("today", "%Y-%m-%d %H:%M:%S", "%s: %6.0f W", buf, resu);
 
@@ -423,7 +424,7 @@ int init_device(struct usb_device *dev, struct usb_dev_handle * udev) {
         sunnybeamdata.serialnum = serialnum;
         printf("Serial Number: %s", string);
         if (verbose)
-            printf(" - USB format: %ld %08lx", serialnum, sunnybeamdata.serialnum);
+            printf(" - USB format: %ld %08lx", (long)serialnum, (long)sunnybeamdata.serialnum);
         printf("\n");
         if ((ret = usb_claim_interface(udev, 0)) == 0) {
             // First do a SET_FEATURE config
@@ -450,8 +451,8 @@ int process_device(struct usb_device * dev) {
 
     ret = usb_get_string_simple(udev, dev->descriptor.iManufacturer, string, sizeof (string));
     if (ret > 0) {
-        snprintf(description, sizeof (description), "%04X - %04X -%s - ", dev->descriptor.idVendor, dev->descriptor.idProduct, string);
-        printf("Dev #%d: %s\n", dev->devnum, description);
+        snprintf(description, sizeof (description), "%04X - %04X -%s - ", (int)dev->descriptor.idVendor, (int)dev->descriptor.idProduct, string);
+        printf("Dev #%d: %s\n", (int)dev->devnum, description);
 
         if (init_device(dev, udev)) {
             if (search_device_id(dev, udev)) {

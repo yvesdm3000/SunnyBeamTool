@@ -59,11 +59,11 @@ extern "C" {
 
 typedef unsigned int       BIT;        /* Prefix bit */
 typedef char               CHAR;       /* Prefix c */
-typedef unsigned char      BYTE;       /* Prefix b */
-typedef short              SHORT;      /* Prefix s */
-typedef unsigned short     WORD;       /* Prefix w */
-typedef long               LONG;       /* Prefix l */
-typedef unsigned long      DWORD;      /* Prefix d */
+typedef uint8_t            BYTE;       /* Prefix b */
+typedef int16_t            SHORT;      /* Prefix s */
+typedef uint16_t           WORD;       /* Prefix w */
+typedef int32_t            LONG;       /* Prefix l */
+typedef uint32_t           DWORD;      /* Prefix d */
 typedef float              FLOAT;      /* Prefix f */
 typedef double             DOUBLE;     /* Prefix dbl */
 
